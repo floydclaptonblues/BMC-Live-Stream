@@ -29,7 +29,7 @@
 
     .bmc-live-wrap{position:relative;z-index:1;width:min(1500px,calc(100vw - 20px));margin:0 auto;padding:18px 0 42px}
     .bmc-live-topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:0 0 12px}
-    .bmc-brandline,.bmc-nav a,.bmc-window-title,.bmc-badge,.bmc-btn,.bmc-status-pill,.bmc-label{font-family:var(--ui-font);text-transform:uppercase;letter-spacing:.08em;font-weight:900;text-shadow:1px 1px 0 #000}
+    .bmc-brandline,.bmc-nav a,.bmc-window-title,.bmc-badge,.bmc-btn,.bmc-status-pill,.bmc-label,.bmc-artist-tile span{font-family:var(--ui-font);text-transform:uppercase;letter-spacing:.08em;font-weight:900;text-shadow:1px 1px 0 #000}
     .bmc-brandline{color:var(--gold);font-size:12px}
     .bmc-nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .bmc-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 13px;border:2px solid #000;background:linear-gradient(180deg,#4c1f7e 0%,#2d1248 100%);color:#fff6e8;font-size:11px;box-shadow:inset 2px 2px 0 rgba(255,255,255,.22),inset -2px -2px 0 rgba(0,0,0,.55),0 5px 0 rgba(10,4,20,.68)}
@@ -80,11 +80,15 @@
     .bmc-mini-list{margin:0;padding:0;list-style:none}
     .bmc-mini-list li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dotted rgba(255,255,255,.24);color:var(--cream);font-weight:900;text-transform:uppercase;font-size:13px}
     .bmc-mini-list li span:last-child{text-align:right;color:var(--green)}
+    .bmc-featured-artists{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
+    .bmc-artist-tile{overflow:hidden;border:2px solid #000;background:rgba(255,255,255,.055);box-shadow:inset 1px 1px 0 rgba(255,255,255,.18),inset -1px -1px 0 rgba(0,0,0,.45)}
+    .bmc-artist-tile img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#120728}
+    .bmc-artist-tile span{display:block;padding:7px 8px;color:var(--cream);font-size:10px;line-height:1.15}
     .bmc-card{padding:16px;margin-top:18px}
     .bmc-card-head{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold);margin-bottom:12px}
 
-    @media (max-width:1040px){.bmc-hero{grid-template-columns:1fr}.bmc-side-card{display:grid;grid-template-columns:260px 1fr;align-items:center}}
-    @media (max-width:720px){.bmc-live-wrap{width:calc(100vw - 14px);padding:12px 0 30px}.bmc-live-topbar{justify-content:center;text-align:center}.bmc-brandline{width:100%;font-size:11px}.bmc-nav{justify-content:center;gap:7px}.bmc-nav a{min-height:32px;padding:6px 9px;font-size:10px}.bmc-window-title{font-size:10px}.bmc-panel{padding:14px}.bmc-player-card,.bmc-side-card,.bmc-card{padding:14px}h1{font-size:clamp(34px,11vw,54px);text-align:center}.bmc-kicker{text-align:center}.bmc-player-head{justify-content:center;text-align:center}.bmc-status-row{justify-content:center;width:100%}.bmc-side-card{display:flex}.bmc-logo{width:min(300px,82vw)}.bmc-buttons{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:9px}.bmc-btn{min-height:44px;padding:10px 8px;font-size:10px;text-align:center}.bmc-control-row{justify-content:center}.bmc-frame-shell{aspect-ratio:16/10}}
+    @media (max-width:1040px){.bmc-hero{grid-template-columns:1fr}.bmc-side-card{display:grid;grid-template-columns:260px 1fr;align-items:center}.bmc-featured-artists{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media (max-width:720px){.bmc-live-wrap{width:calc(100vw - 14px);padding:12px 0 30px}.bmc-live-topbar{justify-content:center;text-align:center}.bmc-brandline{width:100%;font-size:11px}.bmc-nav{justify-content:center;gap:7px}.bmc-nav a{min-height:32px;padding:6px 9px;font-size:10px}.bmc-window-title{font-size:10px}.bmc-panel{padding:14px}.bmc-player-card,.bmc-side-card,.bmc-card{padding:14px}h1{font-size:clamp(34px,11vw,54px);text-align:center}.bmc-kicker{text-align:center}.bmc-player-head{justify-content:center;text-align:center}.bmc-status-row{justify-content:center;width:100%}.bmc-side-card{display:flex}.bmc-logo{width:min(300px,82vw)}.bmc-buttons{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:9px}.bmc-btn{min-height:44px;padding:10px 8px;font-size:10px;text-align:center}.bmc-control-row{justify-content:center}.bmc-frame-shell{aspect-ratio:16/10}.bmc-featured-artists{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media (max-width:420px){.bmc-buttons{grid-template-columns:1fr}.bmc-frame-shell{aspect-ratio:1/1}}
   </style>
 </head>
@@ -147,6 +151,17 @@
               <div class="bmc-info-box">
                 <span class="bmc-label">Tonight</span>
                 <p>Open the BMC schedule for current show times and artist details.</p>
+              </div>
+              <div class="bmc-info-box">
+                <span class="bmc-label">Featured July Artists</span>
+                <div class="bmc-featured-artists">
+                  <a class="bmc-artist-tile" href="https://floydclaptonblues.github.io/UpcomingShows/" target="_blank" rel="noopener"><img src="https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/Tropical%20Weather.png" alt="Tropical Weather promo photo"><span>Tropical Weather</span></a>
+                  <a class="bmc-artist-tile" href="https://floydclaptonblues.github.io/UpcomingShows/" target="_blank" rel="noopener"><img src="https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/Josh%20Benitez%20Band%20Sunday.png" alt="Josh Benitez Band promo photo"><span>Josh Benitez Band</span></a>
+                  <a class="bmc-artist-tile" href="https://floydclaptonblues.github.io/UpcomingShows/" target="_blank" rel="noopener"><img src="https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/Jam%20Brass%20Band%20Thursday%20%281%29.jpg" alt="Jam Brass Band promo photo"><span>Jam Brass Band</span></a>
+                  <a class="bmc-artist-tile" href="https://floydclaptonblues.github.io/UpcomingShows/" target="_blank" rel="noopener"><img src="https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/Leroy%20Marshal.jpg" alt="Leroy Marshall Band promo photo"><span>Leroy Marshall</span></a>
+                  <a class="bmc-artist-tile" href="https://floydclaptonblues.github.io/UpcomingShows/" target="_blank" rel="noopener"><img src="https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/JON%20RONIGER.jpg" alt="Jon Roniger promo photo"><span>Jon Roniger</span></a>
+                  <a class="bmc-artist-tile" href="https://floydclaptonblues.github.io/UpcomingShows/" target="_blank" rel="noopener"><img src="https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/FLEURTATIONS.jpg" alt="The Fleurtations promo photo"><span>Fleurtations</span></a>
+                </div>
               </div>
               <div class="bmc-info-box">
                 <span class="bmc-label">Support BMC Live</span>
