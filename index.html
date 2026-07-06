@@ -7,488 +7,26 @@
   <title>BMC Live Online Theatre | Balcony Music Club</title>
   <style>
     :root{
-      --cream:#fff6dc;
-      --muted:#f3dff5;
-      --gold:#ffd65f;
-      --hot-gold:#ffae32;
-      --pink:#ff4ab0;
-      --magenta:#d83cff;
-      --violet:#6f3cff;
-      --cyan:#5ee6ff;
-      --green:#7cff9f;
-      --panel:#211037;
-      --panel2:#35145f;
-      --black:#09040f;
-      --ui-font:Chicago,Charcoal,Geneva,"MS Sans Serif",Tahoma,Verdana,Arial,sans-serif;
-      --body-font:Tahoma,Verdana,Geneva,Arial,sans-serif;
+      --cream:#fff6dc;--muted:#f3dff5;--gold:#ffd65f;--pink:#ff4ab0;--magenta:#d83cff;--cyan:#5ee6ff;--green:#7cff9f;--black:#09040f;
+      --ui-font:Chicago,Charcoal,Geneva,"MS Sans Serif",Tahoma,Verdana,Arial,sans-serif;--body-font:Tahoma,Verdana,GeneVA,Arial,sans-serif;
     }
-    *{box-sizing:border-box}
-    html{background:#07030d;scroll-behavior:smooth}
-    body{margin:0;min-height:100vh;color:var(--cream);font-family:var(--body-font);background:#07030d;overflow-x:hidden}
-    a{color:inherit;text-decoration:none}
-    button{font:inherit}
-
-    #bmc-live-stream-root{
-      position:relative;
-      min-height:100vh;
-      width:100%;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 50% -18%,rgba(255,216,87,.22),transparent 32%),
-        radial-gradient(circle at 12% 18%,rgba(255,74,176,.23),transparent 30%),
-        radial-gradient(circle at 88% 20%,rgba(94,230,255,.19),transparent 28%),
-        linear-gradient(135deg,#080310 0%,#1b0631 34%,#270a46 55%,#09040f 100%);
-      border-top:2px solid #000;
-      border-bottom:2px solid #000;
-      isolation:isolate;
-    }
-    #bmc-live-stream-root::before{
-      content:"";
-      position:absolute;
-      inset:-12%;
-      z-index:0;
-      pointer-events:none;
-      background:
-        linear-gradient(rgba(8,4,14,.62),rgba(8,4,14,.80)),
-        url("https://floydclaptonblues.github.io/BMC-Homepage/bmc_homepage_build/assets/bmc-bg-tile.gif"),
-        conic-gradient(from 30deg at 50% 8%,rgba(255,216,87,.22),transparent 16%,rgba(255,74,176,.18) 26%,transparent 42%,rgba(94,230,255,.16) 52%,transparent 70%,rgba(255,216,87,.14));
-      background-repeat:repeat,no-repeat,no-repeat;
-      background-size:420px auto,cover,cover;
-      background-position:center top,center,center;
-      filter:saturate(1.28) contrast(1.05);
-      animation:bmcTheatreAura 18s ease-in-out infinite alternate;
-    }
-    #bmc-live-stream-root::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      z-index:0;
-      pointer-events:none;
-      background:
-        linear-gradient(66deg,transparent 0 14%,rgba(255,216,87,.14) 20%,transparent 30%),
-        linear-gradient(112deg,transparent 0 58%,rgba(94,230,255,.11) 66%,transparent 76%),
-        repeating-linear-gradient(0deg,rgba(255,255,255,.055) 0 1px,rgba(255,255,255,0) 1px 4px),
-        radial-gradient(ellipse at center,transparent 0 48%,rgba(0,0,0,.44) 100%);
-      opacity:.86;
-      mix-blend-mode:screen;
-      animation:bmcSpotlightSweep 14s ease-in-out infinite alternate;
-    }
-
-    .bmc-live-wrap{position:relative;z-index:1;width:min(1500px,calc(100vw - 20px));margin:0 auto;padding:18px 0 42px}
-    .bmc-live-topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      padding:0 0 12px;
-    }
-    .bmc-brandline,.bmc-nav a,.bmc-window-title,.bmc-badge,.bmc-btn,.bmc-status-pill,.bmc-label,.bmc-artist-tile span,.bmc-now-showing{
-      font-family:var(--ui-font);
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      font-weight:900;
-      text-shadow:1px 1px 0 #000;
-    }
-    .bmc-brandline{
-      color:var(--gold);
-      font-size:12px;
-      text-shadow:0 0 12px rgba(255,216,95,.56),1px 1px 0 #000;
-    }
-    .bmc-nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .bmc-nav a{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:38px;
-      padding:8px 13px;
-      border:2px solid #000;
-      background:
-        linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0)),
-        linear-gradient(135deg,#5b24a7 0%,#d83cff 48%,#2c104a 100%);
-      color:#fff6e8;
-      font-size:11px;
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.22),
-        inset -2px -2px 0 rgba(0,0,0,.55),
-        0 5px 0 rgba(10,4,20,.68),
-        0 0 18px rgba(216,60,255,.18);
-      transition:transform .16s ease,filter .16s ease,box-shadow .16s ease;
-    }
-    .bmc-nav a:hover,.bmc-nav a:focus-visible{
-      transform:translateY(-2px);
-      filter:saturate(1.25) brightness(1.08);
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.28),
-        inset -2px -2px 0 rgba(0,0,0,.55),
-        0 6px 0 rgba(10,4,20,.72),
-        0 0 28px rgba(255,216,95,.32);
-      outline:none;
-    }
-
-    .bmc-window{
-      position:relative;
-      border:2px solid #000;
-      background:#10071d;
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.20),
-        inset -2px -2px 0 rgba(0,0,0,.62),
-        0 16px 0 rgba(4,1,10,.82),
-        0 0 56px rgba(216,60,255,.24),
-        0 0 90px rgba(94,230,255,.12);
-      overflow:hidden;
-    }
-    .bmc-windowbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding:9px 10px;
-      border-bottom:2px solid #000;
-      background:
-        linear-gradient(90deg,#ffb12e 0%,#ff4ab0 27%,#7f2cc9 56%,#19a8f0 100%);
-      color:#fff7d6;
-      box-shadow:0 0 24px rgba(255,74,176,.24);
-    }
-    .bmc-window-left{display:flex;align-items:center;gap:6px}
-    .bmc-dot{
-      width:14px;
-      height:14px;
-      background:#dbd7df;
-      border:2px solid #000;
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.7),inset -1px -1px 0 rgba(0,0,0,.4),0 0 9px rgba(255,216,95,.38);
-    }
-    .bmc-window-title{font-size:12px}
-    .bmc-panel{
-      position:relative;
-      padding:20px;
-      background:
-        radial-gradient(circle at 50% 0%,rgba(255,216,95,.18),transparent 32%),
-        linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),
-        linear-gradient(135deg,#3a145f 0%,#19072e 45%,#08030f 100%);
-    }
-    .bmc-panel::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(ellipse at 50% 0%,rgba(255,246,220,.12),transparent 42%),
-        linear-gradient(90deg,rgba(0,0,0,.20),transparent 12%,transparent 88%,rgba(0,0,0,.22));
-      z-index:0;
-    }
-    .bmc-panel>*{position:relative;z-index:1}
-
-    .bmc-hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.42fr);gap:18px;align-items:stretch}
-    .bmc-player-card,.bmc-side-card,.bmc-card,.bmc-info-box{
-      position:relative;
-      overflow:hidden;
-      border:2px solid #000;
-      background:
-        linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.025)),
-        linear-gradient(145deg,#471574 0%,#22113d 46%,#0f071c 100%);
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.24),
-        inset -2px -2px 0 rgba(0,0,0,.58),
-        0 8px 0 rgba(10,4,20,.72),
-        0 0 30px rgba(255,74,176,.13);
-    }
-    .bmc-player-card{padding:18px}
-    .bmc-player-card::before,.bmc-side-card::before,.bmc-card::before,.bmc-info-box::before{
-      content:"";
-      position:absolute;
-      inset:-18%;
-      z-index:0;
-      pointer-events:none;
-      opacity:.36;
-      background:
-        radial-gradient(circle at 14% 24%,rgba(94,230,255,.32) 0,rgba(94,230,255,.09) 12%,transparent 32%),
-        radial-gradient(circle at 78% 68%,rgba(255,74,176,.30) 0,rgba(255,74,176,.08) 14%,transparent 36%),
-        linear-gradient(112deg,transparent 0 20%,rgba(94,230,255,.18) 32%,transparent 44%,rgba(255,216,95,.20) 56%,transparent 68%);
-      background-size:160% 160%,150% 150%,230% 230%;
-      animation:bmcRiverFlow 24s linear infinite;
-      mix-blend-mode:screen;
-    }
-    .bmc-player-card::after,.bmc-side-card::after,.bmc-card::after,.bmc-info-box::after{
-      content:"";
-      position:absolute;
-      left:10px;
-      right:10px;
-      top:8px;
-      bottom:8px;
-      z-index:0;
-      pointer-events:none;
-      opacity:.56;
-      background:
-        radial-gradient(circle,rgba(255,236,150,.98) 0 34%,rgba(255,226,132,0) 40%) top left/22px 8px repeat-x,
-        radial-gradient(circle,rgba(255,146,70,.92) 0 32%,rgba(255,160,78,0) 40%) bottom left/22px 8px repeat-x;
-      filter:drop-shadow(0 0 5px rgba(255,215,120,.68)) drop-shadow(0 0 14px rgba(255,126,48,.40));
-      animation:bmcMarqueeShift 5.6s linear infinite,bmcMarqueePulse 3.2s ease-in-out infinite;
-    }
-    .bmc-player-card>*,.bmc-side-card>*,.bmc-card>*,.bmc-info-box>*{position:relative;z-index:1}
-
-    .bmc-player-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-    .bmc-badge{
-      display:inline-flex;
-      width:fit-content;
-      min-height:34px;
-      align-items:center;
-      justify-content:center;
-      padding:8px 12px;
-      background:
-        linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,0)),
-        linear-gradient(90deg,#4b1775,#9d25d6,#1f6fc9);
-      color:var(--gold);
-      font-size:11px;
-      border:2px solid #000;
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.20),inset -1px -1px 0 rgba(0,0,0,.48),0 0 18px rgba(255,216,95,.18);
-    }
-    .bmc-now-showing{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      margin:0 0 8px;
-      padding:7px 10px;
-      border:2px solid #000;
-      background:linear-gradient(180deg,#fff49b 0%,#ffbe32 62%,#ff8b1c 100%);
-      color:#241028;
-      font-size:11px;
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.46),inset -1px -1px 0 rgba(0,0,0,.30),0 0 22px rgba(255,216,95,.32);
-      text-shadow:none;
-    }
-    h1,h2,h3{
-      margin:0;
-      line-height:.92;
-      text-transform:uppercase;
-      letter-spacing:-.04em;
-      font-family:var(--ui-font);
-      color:#fff1cb;
-      text-shadow:
-        3px 3px 0 #000,
-        0 0 22px rgba(255,216,95,.32),
-        0 0 34px rgba(255,74,176,.22);
-    }
-    h1{font-size:clamp(42px,6vw,96px);margin-top:8px}
-    h2{font-size:clamp(24px,2.6vw,42px)}
-    h3{font-size:clamp(18px,2vw,26px)}
-    p{font-size:15px;line-height:1.58;color:var(--muted)}
-    .bmc-kicker{
-      margin:12px 0 0;
-      max-width:920px;
-      color:var(--green);
-      font-weight:800;
-      text-shadow:0 0 14px rgba(124,255,159,.24);
-    }
-    .bmc-status-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
-    .bmc-status-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      min-height:32px;
-      padding:6px 10px;
-      border:2px solid #000;
-      color:#fff7e0;
-      font-size:11px;
-      background:linear-gradient(180deg,#ff4ab0 0%,#7a25c8 55%,#321455 100%);
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.20),inset -1px -1px 0 rgba(0,0,0,.48),0 0 20px rgba(255,74,176,.30);
-    }
-    .bmc-status-dot{
-      width:11px;
-      height:11px;
-      background:var(--green);
-      border:2px solid #000;
-      box-shadow:0 0 12px rgba(124,255,159,.9),0 0 28px rgba(124,255,159,.55);
-      display:inline-block;
-      animation:bmcLivePulse 1.4s ease-in-out infinite;
-    }
-
-    .bmc-frame-shell{
-      position:relative;
-      width:100%;
-      aspect-ratio:16/9;
-      background:#050208;
-      border:4px solid #000;
-      overflow:hidden;
-      box-shadow:
-        inset 0 0 0 2px rgba(255,216,95,.26),
-        inset 2px 2px 0 rgba(255,255,255,.13),
-        inset -2px -2px 0 rgba(0,0,0,.85),
-        0 0 0 6px rgba(255,216,95,.18),
-        0 0 44px rgba(255,74,176,.34),
-        0 0 70px rgba(94,230,255,.20);
-    }
-    .bmc-frame-shell::before{
-      content:"NOW STREAMING";
-      position:absolute;
-      left:50%;
-      top:0;
-      z-index:3;
-      transform:translateX(-50%);
-      padding:5px 12px 6px;
-      border:2px solid #000;
-      border-top:0;
-      background:linear-gradient(180deg,#fff49b,#ffae32);
-      color:#241028;
-      font-family:var(--ui-font);
-      font-size:11px;
-      font-weight:900;
-      letter-spacing:.10em;
-      text-shadow:none;
-      box-shadow:0 0 20px rgba(255,216,95,.34);
-      pointer-events:none;
-    }
-    .bmc-frame-shell::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      z-index:2;
-      pointer-events:none;
-      background:
-        linear-gradient(110deg,transparent 0 44%,rgba(255,255,255,.10) 48%,transparent 54%),
-        radial-gradient(ellipse at center,transparent 0 62%,rgba(0,0,0,.28) 100%);
-      mix-blend-mode:screen;
-    }
-    .bmc-frame-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
-    .bmc-control-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
-    .bmc-buttons{display:flex;gap:12px;flex-wrap:wrap}
-    .bmc-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:50px;
-      padding:12px 18px;
-      border:2px solid #000;
-      font-size:12px;
-      cursor:pointer;
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.24),
-        inset -2px -2px 0 rgba(0,0,0,.58),
-        0 5px 0 rgba(10,4,18,.76),
-        0 0 18px rgba(255,255,255,.08);
-      transition:transform .16s ease,filter .16s ease,box-shadow .16s ease;
-    }
-    .bmc-btn:hover,.bmc-btn:focus-visible{
-      transform:translateY(-2px) scale(1.015);
-      filter:saturate(1.2) brightness(1.08);
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.28),
-        inset -2px -2px 0 rgba(0,0,0,.58),
-        0 7px 0 rgba(10,4,18,.78),
-        0 0 30px rgba(255,216,95,.24);
-      outline:none;
-    }
-    .bmc-btn-gold{background:linear-gradient(180deg,#fff49b 0%,#ffbe32 55%,#ff8b1c 100%);color:#241028;text-shadow:none}
-    .bmc-btn-purple{background:linear-gradient(180deg,#ff8cff 0%,#d83cff 48%,#6c10b4 100%);color:#fff7e0}
-    .bmc-btn-green{background:linear-gradient(180deg,#7cff9f 0%,#10a64d 65%,#057c35 100%);color:#06190d;text-shadow:none}
-    .bmc-btn-cyan{background:linear-gradient(180deg,#94fbff 0%,#19a8f0 65%,#0a5cae 100%);color:#07182a;text-shadow:none}
-
-    .bmc-side-card{padding:16px;display:flex;flex-direction:column;gap:16px;min-width:0}
-    .bmc-logo{
-      display:block;
-      width:min(300px,74vw);
-      height:auto;
-      margin:0 auto;
-      filter:drop-shadow(0 12px 18px rgba(0,0,0,.45)) drop-shadow(0 0 22px rgba(255,216,95,.22));
-    }
-    .bmc-info-box{padding:14px;background:rgba(255,255,255,.060)}
-    .bmc-label{display:block;color:var(--gold);font-size:11px;margin-bottom:5px}
-    .bmc-info-box p{margin:0;color:var(--cream)}
-    .bmc-mini-list{margin:0;padding:0;list-style:none}
-    .bmc-mini-list li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dotted rgba(255,255,255,.24);color:var(--cream);font-weight:900;text-transform:uppercase;font-size:13px}
-    .bmc-mini-list li span:last-child{text-align:right;color:var(--green)}
-    .bmc-featured-artists{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
-    .bmc-artist-tile{
-      overflow:hidden;
-      border:2px solid #000;
-      background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.18),inset -1px -1px 0 rgba(0,0,0,.45),0 0 16px rgba(94,230,255,.10);
-      transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;
-    }
-    .bmc-artist-tile:hover,.bmc-artist-tile:focus-visible{
-      transform:translateY(-3px);
-      filter:saturate(1.18) brightness(1.06);
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.22),inset -1px -1px 0 rgba(0,0,0,.45),0 0 28px rgba(255,216,95,.24);
-      outline:none;
-    }
-    .bmc-artist-tile img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#120728}
-    .bmc-artist-tile span{display:block;padding:7px 8px;color:var(--cream);font-size:10px;line-height:1.15;background:linear-gradient(90deg,rgba(255,74,176,.22),rgba(94,230,255,.13))}
-    .bmc-card{padding:18px;margin-top:18px}
-    .bmc-card-head{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold);margin-bottom:12px}
-    .bmc-card p{text-align:center;max-width:920px;margin:0 auto;color:var(--cream)}
-    .bmc-theatre-strip{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-    .bmc-theatre-strip span{
-      display:inline-flex;
-      align-items:center;
-      min-height:30px;
-      padding:6px 10px;
-      border:2px solid #000;
-      background:linear-gradient(180deg,#4f1f88,#1b0b2f);
-      color:var(--gold);
-      font-family:var(--ui-font);
-      font-size:10px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.16),inset -1px -1px 0 rgba(0,0,0,.45),0 0 16px rgba(255,74,176,.15);
-    }
-
-    @keyframes bmcTheatreAura{
-      0%{transform:scale(1) rotate(0deg);filter:saturate(1.15) contrast(1.02)}
-      100%{transform:scale(1.035) rotate(.35deg);filter:saturate(1.45) contrast(1.10)}
-    }
-    @keyframes bmcSpotlightSweep{
-      0%{opacity:.62;transform:translateX(-1.5%)}
-      100%{opacity:.94;transform:translateX(1.5%)}
-    }
-    @keyframes bmcRiverFlow{
-      0%{transform:translate3d(-2%,0,0);background-position:0% 25%,0% 75%,0% 40%}
-      50%{transform:translate3d(2%,1%,0);background-position:55% 35%,45% 65%,75% 55%}
-      100%{transform:translate3d(-2%,0,0);background-position:110% 25%,95% 75%,150% 40%}
-    }
-    @keyframes bmcMarqueeShift{0%{background-position:0 0,0 100%}100%{background-position:20px 0,-20px 100%}}
-    @keyframes bmcMarqueePulse{0%,100%{opacity:.36}50%{opacity:.70}}
-    @keyframes bmcLivePulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.22);opacity:.78}}
-
-    @media (max-width:1040px){
-      .bmc-hero{grid-template-columns:1fr}
-      .bmc-side-card{display:grid;grid-template-columns:260px 1fr;align-items:center}
-      .bmc-featured-artists{grid-template-columns:repeat(3,minmax(0,1fr))}
-    }
-    @media (max-width:720px){
-      .bmc-live-wrap{width:calc(100vw - 14px);padding:12px 0 30px}
-      .bmc-live-topbar{justify-content:center;text-align:center}
-      .bmc-brandline{width:100%;font-size:11px}
-      .bmc-nav{justify-content:center;gap:7px}
-      .bmc-nav a{min-height:32px;padding:6px 9px;font-size:10px}
-      .bmc-window-title{font-size:10px}
-      .bmc-panel{padding:14px}
-      .bmc-player-card,.bmc-side-card,.bmc-card{padding:14px}
-      .bmc-now-showing{margin-left:auto;margin-right:auto}
-      h1{font-size:clamp(34px,11vw,58px);text-align:center}
-      .bmc-kicker{text-align:center}
-      .bmc-player-head{justify-content:center;text-align:center}
-      .bmc-status-row{justify-content:center;width:100%}
-      .bmc-side-card{display:flex}
-      .bmc-logo{width:min(300px,82vw)}
-      .bmc-buttons{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:9px}
-      .bmc-btn{min-height:44px;padding:10px 8px;font-size:10px;text-align:center}
-      .bmc-control-row{justify-content:center}
-      .bmc-frame-shell{aspect-ratio:16/10}
-      .bmc-featured-artists{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-    @media (max-width:420px){
-      .bmc-buttons{grid-template-columns:1fr}
-      .bmc-frame-shell{aspect-ratio:1/1}
-    }
-    @media (prefers-reduced-motion:reduce){
-      *,*::before,*::after{animation:none !important;scroll-behavior:auto !important;transition:none !important}
-    }
+    *{box-sizing:border-box}html{background:#07030d;scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--cream);font-family:var(--body-font);background:#07030d;overflow-x:hidden}a{color:inherit;text-decoration:none}button{font:inherit}
+    #bmc-live-stream-root{position:relative;min-height:100vh;width:100%;overflow:hidden;background:radial-gradient(circle at 50% -18%,rgba(255,216,87,.22),transparent 32%),radial-gradient(circle at 12% 18%,rgba(255,74,176,.23),transparent 30%),radial-gradient(circle at 88% 20%,rgba(94,230,255,.19),transparent 28%),linear-gradient(135deg,#080310 0%,#1b0631 34%,#270a46 55%,#09040f 100%);border-top:2px solid #000;border-bottom:2px solid #000;isolation:isolate}
+    #bmc-live-stream-root::before{content:"";position:absolute;inset:-12%;z-index:0;pointer-events:none;background:linear-gradient(rgba(8,4,14,.62),rgba(8,4,14,.80)),url("https://floydclaptonblues.github.io/BMC-Homepage/bmc_homepage_build/assets/bmc-bg-tile.gif"),conic-gradient(from 30deg at 50% 8%,rgba(255,216,87,.22),transparent 16%,rgba(255,74,176,.18) 26%,transparent 42%,rgba(94,230,255,.16) 52%,transparent 70%,rgba(255,216,87,.14));background-repeat:repeat,no-repeat,no-repeat;background-size:420px auto,cover,cover;background-position:center top,center,center;filter:saturate(1.28) contrast(1.05);animation:bmcTheatreAura 18s ease-in-out infinite alternate}
+    #bmc-live-stream-root::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(66deg,transparent 0 14%,rgba(255,216,87,.14) 20%,transparent 30%),linear-gradient(112deg,transparent 0 58%,rgba(94,230,255,.11) 66%,transparent 76%),repeating-linear-gradient(0deg,rgba(255,255,255,.055) 0 1px,rgba(255,255,255,0) 1px 4px),radial-gradient(ellipse at center,transparent 0 48%,rgba(0,0,0,.44) 100%);opacity:.86;mix-blend-mode:screen;animation:bmcSpotlightSweep 14s ease-in-out infinite alternate}
+    .bmc-live-wrap{position:relative;z-index:1;width:min(1500px,calc(100vw - 20px));margin:0 auto;padding:18px 0 42px}.bmc-live-topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:0 0 12px}
+    .bmc-brandline,.bmc-nav a,.bmc-window-title,.bmc-badge,.bmc-btn,.bmc-status-pill,.bmc-label,.bmc-artist-tile span,.bmc-now-showing,.bmc-theatre-strip span{font-family:var(--ui-font);text-transform:uppercase;letter-spacing:.08em;font-weight:900;text-shadow:1px 1px 0 #000}.bmc-brandline{color:var(--gold);font-size:12px;text-shadow:0 0 12px rgba(255,216,95,.56),1px 1px 0 #000}
+    .bmc-nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.bmc-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 13px;border:2px solid #000;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0)),linear-gradient(135deg,#5b24a7 0%,#d83cff 48%,#2c104a 100%);color:#fff6e8;font-size:11px;box-shadow:inset 2px 2px 0 rgba(255,255,255,.22),inset -2px -2px 0 rgba(0,0,0,.55),0 5px 0 rgba(10,4,20,.68),0 0 18px rgba(216,60,255,.18);transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}.bmc-nav a:hover,.bmc-nav a:focus-visible{transform:translateY(-2px);filter:saturate(1.25) brightness(1.08);box-shadow:inset 2px 2px 0 rgba(255,255,255,.28),inset -2px -2px 0 rgba(0,0,0,.55),0 6px 0 rgba(10,4,20,.72),0 0 28px rgba(255,216,95,.32);outline:none}
+    .bmc-window{position:relative;border:2px solid #000;background:#10071d;box-shadow:inset 2px 2px 0 rgba(255,255,255,.20),inset -2px -2px 0 rgba(0,0,0,.62),0 16px 0 rgba(4,1,10,.82),0 0 56px rgba(216,60,255,.24),0 0 90px rgba(94,230,255,.12);overflow:hidden}.bmc-windowbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 10px;border-bottom:2px solid #000;background:linear-gradient(90deg,#ffb12e 0%,#ff4ab0 27%,#7f2cc9 56%,#19a8f0 100%);color:#fff7d6;box-shadow:0 0 24px rgba(255,74,176,.24)}.bmc-window-left{display:flex;align-items:center;gap:6px}.bmc-dot{width:14px;height:14px;background:#dbd7df;border:2px solid #000;box-shadow:inset 1px 1px 0 rgba(255,255,255,.7),inset -1px -1px 0 rgba(0,0,0,.4),0 0 9px rgba(255,216,95,.38)}.bmc-window-title{font-size:12px}
+    .bmc-panel{position:relative;padding:20px;background:radial-gradient(circle at 50% 0%,rgba(255,216,95,.18),transparent 32%),linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),linear-gradient(135deg,#3a145f 0%,#19072e 45%,#08030f 100%)}.bmc-panel::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(255,246,220,.12),transparent 42%),linear-gradient(90deg,rgba(0,0,0,.20),transparent 12%,transparent 88%,rgba(0,0,0,.22));z-index:0}.bmc-panel>*{position:relative;z-index:1}
+    .bmc-hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.42fr);gap:18px;align-items:stretch}.bmc-player-card,.bmc-side-card,.bmc-card,.bmc-info-box{position:relative;overflow:hidden;border:2px solid #000;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.025)),linear-gradient(145deg,#471574 0%,#22113d 46%,#0f071c 100%);box-shadow:inset 2px 2px 0 rgba(255,255,255,.24),inset -2px -2px 0 rgba(0,0,0,.58),0 8px 0 rgba(10,4,20,.72),0 0 30px rgba(255,74,176,.13)}.bmc-player-card{padding:18px}.bmc-player-card::before,.bmc-side-card::before,.bmc-card::before,.bmc-info-box::before{content:"";position:absolute;inset:-18%;z-index:0;pointer-events:none;opacity:.36;background:radial-gradient(circle at 14% 24%,rgba(94,230,255,.32) 0,rgba(94,230,255,.09) 12%,transparent 32%),radial-gradient(circle at 78% 68%,rgba(255,74,176,.30) 0,rgba(255,74,176,.08) 14%,transparent 36%),linear-gradient(112deg,transparent 0 20%,rgba(94,230,255,.18) 32%,transparent 44%,rgba(255,216,95,.20) 56%,transparent 68%);background-size:160% 160%,150% 150%,230% 230%;animation:bmcRiverFlow 24s linear infinite;mix-blend-mode:screen}.bmc-player-card::after,.bmc-side-card::after,.bmc-card::after,.bmc-info-box::after{content:"";position:absolute;left:10px;right:10px;top:8px;bottom:8px;z-index:0;pointer-events:none;opacity:.56;background:radial-gradient(circle,rgba(255,236,150,.98) 0 34%,rgba(255,226,132,0) 40%) top left/22px 8px repeat-x,radial-gradient(circle,rgba(255,146,70,.92) 0 32%,rgba(255,160,78,0) 40%) bottom left/22px 8px repeat-x;filter:drop-shadow(0 0 5px rgba(255,215,120,.68)) drop-shadow(0 0 14px rgba(255,126,48,.40));animation:bmcMarqueeShift 5.6s linear infinite,bmcMarqueePulse 3.2s ease-in-out infinite}.bmc-player-card>*,.bmc-side-card>*,.bmc-card>*,.bmc-info-box>*{position:relative;z-index:1}
+    .bmc-player-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}.bmc-badge{display:inline-flex;width:fit-content;min-height:34px;align-items:center;justify-content:center;padding:8px 12px;background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,0)),linear-gradient(90deg,#4b1775,#9d25d6,#1f6fc9);color:var(--gold);font-size:11px;border:2px solid #000;box-shadow:inset 1px 1px 0 rgba(255,255,255,.20),inset -1px -1px 0 rgba(0,0,0,.48),0 0 18px rgba(255,216,95,.18)}.bmc-now-showing{display:inline-flex;align-items:center;gap:8px;margin:0 0 8px;padding:7px 10px;border:2px solid #000;background:linear-gradient(180deg,#fff49b 0%,#ffbe32 62%,#ff8b1c 100%);color:#241028;font-size:11px;box-shadow:inset 1px 1px 0 rgba(255,255,255,.46),inset -1px -1px 0 rgba(0,0,0,.30),0 0 22px rgba(255,216,95,.32);text-shadow:none}
+    h1,h2,h3{margin:0;line-height:.92;text-transform:uppercase;letter-spacing:-.04em;font-family:var(--ui-font);color:#fff1cb;text-shadow:3px 3px 0 #000,0 0 22px rgba(255,216,95,.32),0 0 34px rgba(255,74,176,.22)}h1{font-size:clamp(42px,6vw,96px);margin-top:8px}h2{font-size:clamp(24px,2.6vw,42px)}h3{font-size:clamp(18px,2vw,26px)}p{font-size:15px;line-height:1.58;color:var(--muted)}.bmc-kicker{margin:12px 0 0;max-width:720px;color:var(--green);font-weight:800;text-shadow:0 0 14px rgba(124,255,159,.24)}.bmc-status-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}.bmc-status-pill{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:6px 10px;border:2px solid #000;color:#fff7e0;font-size:11px;background:linear-gradient(180deg,#ff4ab0 0%,#7a25c8 55%,#321455 100%);box-shadow:inset 1px 1px 0 rgba(255,255,255,.20),inset -1px -1px 0 rgba(0,0,0,.48),0 0 20px rgba(255,74,176,.30)}.bmc-status-dot{width:11px;height:11px;background:var(--green);border:2px solid #000;box-shadow:0 0 12px rgba(124,255,159,.9),0 0 28px rgba(124,255,159,.55);display:inline-block;animation:bmcLivePulse 1.4s ease-in-out infinite}
+    .bmc-frame-shell{position:relative;width:100%;aspect-ratio:16/9;background:#050208;border:4px solid #000;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,216,95,.26),inset 2px 2px 0 rgba(255,255,255,.13),inset -2px -2px 0 rgba(0,0,0,.85),0 0 0 6px rgba(255,216,95,.18),0 0 44px rgba(255,74,176,.34),0 0 70px rgba(94,230,255,.20)}.bmc-frame-shell::before{content:"NOW STREAMING";position:absolute;left:50%;top:0;z-index:3;transform:translateX(-50%);padding:5px 12px 6px;border:2px solid #000;border-top:0;background:linear-gradient(180deg,#fff49b,#ffae32);color:#241028;font-family:var(--ui-font);font-size:11px;font-weight:900;letter-spacing:.10em;text-shadow:none;box-shadow:0 0 20px rgba(255,216,95,.34);pointer-events:none}.bmc-frame-shell::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(110deg,transparent 0 44%,rgba(255,255,255,.10) 48%,transparent 54%),radial-gradient(ellipse at center,transparent 0 62%,rgba(0,0,0,.28) 100%);mix-blend-mode:screen}.bmc-frame-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+    .bmc-control-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}.bmc-buttons{display:flex;gap:12px;flex-wrap:wrap}.bmc-btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:12px 18px;border:2px solid #000;font-size:12px;cursor:pointer;box-shadow:inset 2px 2px 0 rgba(255,255,255,.24),inset -2px -2px 0 rgba(0,0,0,.58),0 5px 0 rgba(10,4,18,.76),0 0 18px rgba(255,255,255,.08);transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}.bmc-btn:hover,.bmc-btn:focus-visible{transform:translateY(-2px) scale(1.015);filter:saturate(1.2) brightness(1.08);box-shadow:inset 2px 2px 0 rgba(255,255,255,.28),inset -2px -2px 0 rgba(0,0,0,.58),0 7px 0 rgba(10,4,18,.78),0 0 30px rgba(255,216,95,.24);outline:none}.bmc-btn-gold{background:linear-gradient(180deg,#fff49b 0%,#ffbe32 55%,#ff8b1c 100%);color:#241028;text-shadow:none}.bmc-btn-purple{background:linear-gradient(180deg,#ff8cff 0%,#d83cff 48%,#6c10b4 100%);color:#fff7e0}.bmc-btn-green{background:linear-gradient(180deg,#7cff9f 0%,#10a64d 65%,#057c35 100%);color:#06190d;text-shadow:none}.bmc-btn-cyan{background:linear-gradient(180deg,#94fbff 0%,#19a8f0 65%,#0a5cae 100%);color:#07182a;text-shadow:none}
+    .bmc-side-card{padding:16px;display:flex;flex-direction:column;gap:16px;min-width:0}.bmc-logo{display:block;width:min(300px,74vw);height:auto;margin:0 auto;filter:drop-shadow(0 12px 18px rgba(0,0,0,.45)) drop-shadow(0 0 22px rgba(255,216,95,.22))}.bmc-info-box{padding:14px;background:rgba(255,255,255,.060)}.bmc-label{display:block;color:var(--gold);font-size:11px;margin-bottom:5px}.bmc-info-box p{margin:0;color:var(--cream)}.bmc-mini-list{margin:0;padding:0;list-style:none}.bmc-mini-list li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dotted rgba(255,255,255,.24);color:var(--cream);font-weight:900;text-transform:uppercase;font-size:13px}.bmc-mini-list li span:last-child{text-align:right;color:var(--green)}.bmc-featured-artists{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}.bmc-artist-tile{overflow:hidden;border:2px solid #000;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:inset 1px 1px 0 rgba(255,255,255,.18),inset -1px -1px 0 rgba(0,0,0,.45),0 0 16px rgba(94,230,255,.10);transition:transform .16s ease,box-shadow .16s ease,filter .16s ease}.bmc-artist-tile:hover,.bmc-artist-tile:focus-visible{transform:translateY(-3px);filter:saturate(1.18) brightness(1.06);box-shadow:inset 1px 1px 0 rgba(255,255,255,.22),inset -1px -1px 0 rgba(0,0,0,.45),0 0 28px rgba(255,216,95,.24);outline:none}.bmc-artist-tile img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#120728}.bmc-artist-tile span{display:block;padding:7px 8px;color:var(--cream);font-size:10px;line-height:1.15;background:linear-gradient(90deg,rgba(255,74,176,.22),rgba(94,230,255,.13))}.bmc-card{padding:18px;margin-top:18px}.bmc-card-head{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold);margin-bottom:12px}.bmc-card p{text-align:center;max-width:760px;margin:0 auto;color:var(--cream)}.bmc-theatre-strip{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}.bmc-theatre-strip span{display:inline-flex;align-items:center;min-height:30px;padding:6px 10px;border:2px solid #000;background:linear-gradient(180deg,#4f1f88,#1b0b2f);color:var(--gold);font-size:10px;box-shadow:inset 1px 1px 0 rgba(255,255,255,.16),inset -1px -1px 0 rgba(0,0,0,.45),0 0 16px rgba(255,74,176,.15)}
+    @keyframes bmcTheatreAura{0%{transform:scale(1) rotate(0deg);filter:saturate(1.15) contrast(1.02)}100%{transform:scale(1.035) rotate(.35deg);filter:saturate(1.45) contrast(1.10)}}@keyframes bmcSpotlightSweep{0%{opacity:.62;transform:translateX(-1.5%)}100%{opacity:.94;transform:translateX(1.5%)}}@keyframes bmcRiverFlow{0%{transform:translate3d(-2%,0,0);background-position:0% 25%,0% 75%,0% 40%}50%{transform:translate3d(2%,1%,0);background-position:55% 35%,45% 65%,75% 55%}100%{transform:translate3d(-2%,0,0);background-position:110% 25%,95% 75%,150% 40%}}@keyframes bmcMarqueeShift{0%{background-position:0 0,0 100%}100%{background-position:20px 0,-20px 100%}}@keyframes bmcMarqueePulse{0%,100%{opacity:.36}50%{opacity:.70}}@keyframes bmcLivePulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.22);opacity:.78}}
+    @media (max-width:1040px){.bmc-hero{grid-template-columns:1fr}.bmc-side-card{display:grid;grid-template-columns:260px 1fr;align-items:center}.bmc-featured-artists{grid-template-columns:repeat(3,minmax(0,1fr))}}@media (max-width:720px){.bmc-live-wrap{width:calc(100vw - 14px);padding:12px 0 30px}.bmc-live-topbar{justify-content:center;text-align:center}.bmc-brandline{width:100%;font-size:11px}.bmc-nav{justify-content:center;gap:7px}.bmc-nav a{min-height:32px;padding:6px 9px;font-size:10px}.bmc-window-title{font-size:10px}.bmc-panel{padding:14px}.bmc-player-card,.bmc-side-card,.bmc-card{padding:14px}.bmc-now-showing{margin-left:auto;margin-right:auto}h1{font-size:clamp(34px,11vw,58px);text-align:center}.bmc-kicker{text-align:center;margin-left:auto;margin-right:auto}.bmc-player-head{justify-content:center;text-align:center}.bmc-status-row{justify-content:center;width:100%}.bmc-side-card{display:flex}.bmc-logo{width:min(300px,82vw)}.bmc-buttons{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:9px}.bmc-btn{min-height:44px;padding:10px 8px;font-size:10px;text-align:center}.bmc-control-row{justify-content:center}.bmc-frame-shell{aspect-ratio:16/10}.bmc-featured-artists{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:420px){.bmc-buttons{grid-template-columns:1fr}.bmc-frame-shell{aspect-ratio:1/1}}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;scroll-behavior:auto !important;transition:none !important}}
   </style>
 </head>
 <body>
@@ -520,7 +58,7 @@
                   <div class="bmc-now-showing">Now Showing • Live From New Orleans</div>
                   <div class="bmc-badge">Twitch beta stream • Tip the artists • Enter the theatre</div>
                   <h1>BMC Live Online Theatre</h1>
-                  <p class="bmc-kicker">Balcony Music Club turns your screen into a French Quarter live-room: glowing marquee lights, real artists, house-feed energy, and the broadcast embedded below.</p>
+                  <p class="bmc-kicker">Live music from Balcony Music Club in New Orleans. Press play and step inside.</p>
                 </div>
                 <div class="bmc-status-row">
                   <span class="bmc-status-pill"><i class="bmc-status-dot" aria-hidden="true"></i><span>Live on Twitch</span></span>
@@ -528,12 +66,7 @@
               </div>
 
               <div class="bmc-frame-shell" id="bmc-frame-shell">
-                <iframe
-                  title="Balcony Music Club live stream on Twitch"
-                  src="https://player.twitch.tv/?channel=bmcnolalive&parent=bmclive.balconymusicclub.com&parent=balconymusicclub.com&parent=www.balconymusicclub.com&parent=floydclaptonblues.github.io&autoplay=true&muted=true"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowfullscreen>
-                </iframe>
+                <iframe title="Balcony Music Club live stream on Twitch" src="https://player.twitch.tv/?channel=bmcnolalive&parent=bmclive.balconymusicclub.com&parent=balconymusicclub.com&parent=www.balconymusicclub.com&parent=floydclaptonblues.github.io&autoplay=true&muted=true" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
               </div>
 
               <div class="bmc-control-row">
@@ -548,10 +81,7 @@
 
             <aside class="bmc-side-card">
               <img class="bmc-logo" src="https://floydclaptonblues.github.io/BMC-Homepage/bmc_homepage_build/assets/bmc-logo-pixel.png" alt="Balcony Music Club New Orleans" />
-              <div class="bmc-info-box">
-                <span class="bmc-label">Tonight's Feature</span>
-                <p>Open the BMC schedule for current showtimes, artist details, and the next live-room broadcast.</p>
-              </div>
+              <div class="bmc-info-box"><span class="bmc-label">Tonight's Feature</span><p>Check the BMC schedule for showtimes and artist details.</p></div>
               <div class="bmc-info-box">
                 <span class="bmc-label">Featured July Artists</span>
                 <div class="bmc-featured-artists">
@@ -563,32 +93,18 @@
                   <a class="bmc-artist-tile" href="https://floydclaptonblues.github.io/UpcomingShows/" target="_blank" rel="noopener"><img src="https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/FLEURTATIONS.jpg" alt="The Fleurtations promo photo"><span>Fleurtations</span></a>
                 </div>
               </div>
-              <div class="bmc-info-box">
-                <span class="bmc-label">Support BMC Live</span>
-                <p>Drop tonight's Cash App and Venmo QR codes here for direct artist tips.</p>
-              </div>
+              <div class="bmc-info-box"><span class="bmc-label">Support BMC Live</span><p>Tip tonight's artist directly.</p></div>
               <div class="bmc-info-box">
                 <span class="bmc-label">Broadcast Notes</span>
-                <ul class="bmc-mini-list">
-                  <li><span>Venue</span><span>New Orleans</span></li>
-                  <li><span>Cost</span><span>Free Beta</span></li>
-                  <li><span>Audio</span><span>House Feed</span></li>
-                  <li><span>Video</span><span>Twitch</span></li>
-                  <li><span>Tips</span><span>Artist Direct</span></li>
-                </ul>
+                <ul class="bmc-mini-list"><li><span>Venue</span><span>New Orleans</span></li><li><span>Cost</span><span>Free Beta</span></li><li><span>Audio</span><span>House Feed</span></li><li><span>Video</span><span>Twitch</span></li><li><span>Tips</span><span>Artist Direct</span></li></ul>
               </div>
             </aside>
           </div>
 
           <section class="bmc-card" id="artist-tips" aria-label="Artist tipping">
             <div class="bmc-card-head"><span>✦</span><h2>Support BMC Live</h2><span>✦</span></div>
-            <p>This free beta stream is supported by viewer tips. Drop something directly to tonight's artist if you like what you hear, then stay for the next set like you bought a balcony ticket to the internet.</p>
-            <div class="bmc-theatre-strip" aria-label="BMC Live theatre features">
-              <span>Now Streaming</span>
-              <span>Artist Direct Tips</span>
-              <span>French Quarter Feed</span>
-              <span>Fullscreen Theatre</span>
-            </div>
+            <p>Tip tonight's artist directly. Every bit helps keep the music going.</p>
+            <div class="bmc-theatre-strip" aria-label="BMC Live theatre features"><span>Now Streaming</span><span>Artist Direct Tips</span><span>French Quarter Feed</span><span>Fullscreen Theatre</span></div>
           </section>
         </div>
       </section>
@@ -596,20 +112,9 @@
   </main>
 
   <script>
-    function tickClock(){
-      const clock=document.querySelector("[data-bmc-clock]");
-      if(!clock)return;
-      clock.textContent=new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",hour:"numeric",minute:"2-digit",month:"short",day:"numeric"}).format(new Date())+" CT";
-    }
-    function installFullscreen(){
-      const shell=document.getElementById("bmc-frame-shell");
-      const fullscreen=document.querySelector("[data-bmc-fullscreen]");
-      if(!fullscreen||!shell)return;
-      fullscreen.addEventListener("click",function(){if(shell.requestFullscreen)shell.requestFullscreen();});
-    }
-    tickClock();
-    installFullscreen();
-    setInterval(tickClock,30000);
+    function tickClock(){const clock=document.querySelector("[data-bmc-clock]");if(!clock)return;clock.textContent=new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",hour:"numeric",minute:"2-digit",month:"short",day:"numeric"}).format(new Date())+" CT";}
+    function installFullscreen(){const shell=document.getElementById("bmc-frame-shell");const fullscreen=document.querySelector("[data-bmc-fullscreen]");if(!fullscreen||!shell)return;fullscreen.addEventListener("click",function(){if(shell.requestFullscreen)shell.requestFullscreen();});}
+    tickClock();installFullscreen();setInterval(tickClock,30000);
   </script>
 </body>
 </html>
