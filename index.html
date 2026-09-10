@@ -165,7 +165,7 @@
               </div>
               <div class="info">
                 <span class="label">Schedule authority</span>
-                <p style="margin:0">The live page reads the same August schedule used by the BMC Shows site, with a raw GitHub fallback if the custom-domain JSON cannot be fetched.</p>
+                <p style="margin:0">The live page uses the current BMC Shows schedule. Showtimes are in Central Time, and past shows are automatically hidden.</p>
               </div>
             </aside>
           </div>
@@ -236,16 +236,16 @@
     }
 
     function flattenSchedule(data) {
-      const monthMatch = String(data.month || "").match(/^([A-Za-z]+)\s+(\d{4})$/);
-      if (!monthMatch) return [];
-      const month = monthNumber(monthMatch[1]);
-      const year = monthMatch[2];
-      if (!month) return [];
+      const yearMatch = String(data.month || "").match(/\b(\d{4})$/);
+      if (!yearMatch) return [];
+      const year = yearMatch[1];
 
       const rows = [];
       for (const day of data.shows || []) {
         const dayMatch = String(day.date || "").match(/([A-Za-z]+)\s+(\d{1,2})$/);
         if (!dayMatch) continue;
+        const month = monthNumber(dayMatch[1]);
+        if (!month) continue;
         const dayNum = String(Number(dayMatch[2])).padStart(2, "0");
         const dateKey = `${year}-${month}-${dayNum}`;
 
@@ -294,7 +294,7 @@
     function renderSchedule(data) {
       const items = flattenSchedule(data);
       const now = currentChicago();
-      const active = items.find(item => item.dateKey === now.key && item.start <= now.minutes && now.minutes <= item.end);
+      const active = items.find(item => item.dateKey === now.key && item.start <= now.minutes && now.minutes < item.end);
       const future = items.filter(item => item.dateKey > now.key || (item.dateKey === now.key && item.start > now.minutes));
       const todaysFuture = future.filter(item => item.dateKey === now.key);
       const next = future[0];
