@@ -165,7 +165,7 @@
               </div>
               <div class="info">
                 <span class="label">Schedule authority</span>
-                <p style="margin:0">The live page reads the same August schedule used by the BMC Shows site, with a raw GitHub fallback if the custom-domain JSON cannot be fetched.</p>
+                <p style="margin:0">The live page reads the same current schedule used by the BMC Shows site, with a raw GitHub fallback if the custom-domain JSON cannot be fetched.</p>
               </div>
             </aside>
           </div>
@@ -236,17 +236,18 @@
     }
 
     function flattenSchedule(data) {
-      const monthMatch = String(data.month || "").match(/^([A-Za-z]+)\s+(\d{4})$/);
-      if (!monthMatch) return [];
-      const month = monthNumber(monthMatch[1]);
-      const year = monthMatch[2];
-      if (!month) return [];
+      const yearMatch = String(data.month || data.subtitle || "").match(/\b(20\d{2})\b/);
+      if (!yearMatch) return [];
+      const year = yearMatch[1];
 
       const rows = [];
       for (const day of data.shows || []) {
         const dayMatch = String(day.date || "").match(/([A-Za-z]+)\s+(\d{1,2})$/);
         if (!dayMatch) continue;
-        const dayNum = String(Number(dayMatch[2])).padStart(2, "0");
+        const month = monthNumber(dayMatch[1]);
+        const dayNumber = Number(dayMatch[2]);
+        if (!month || dayNumber < 1 || dayNumber > new Date(Date.UTC(Number(year), Number(month), 0)).getUTCDate()) continue;
+        const dayNum = String(dayNumber).padStart(2, "0");
         const dateKey = `${year}-${month}-${dayNum}`;
 
         for (const show of day.shows || []) {
