@@ -300,7 +300,12 @@
       const todaysFuture = future.filter(item => item.dateKey === now.key);
       const next = future[0];
 
-      if (active) {
+      const closedForThanksgiving = now.key === "2026-11-26" && (data.shows || []).some(day =>
+        day.date === "Thursday • November 26" && day.closed === true
+      );
+      if (closedForThanksgiving) {
+        setFeature("Closed today", "Thanksgiving", "Balcony Music Club is closed — no live music scheduled.", false);
+      } else if (active) {
         setFeature("Scheduled now", active.artist, `${active.time} • ${active.dateLabel}`, true);
       } else if (todaysFuture.length) {
         const item = todaysFuture[0];
