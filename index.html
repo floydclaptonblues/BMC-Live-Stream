@@ -242,13 +242,16 @@
 
       const rows = [];
       for (const day of data.shows || []) {
-        const dayMatch = String(day.date || "").match(/([A-Za-z]+)\s+(\d{1,2})$/);
-        if (!dayMatch) continue;
-        const month = monthNumber(dayMatch[1]);
-        const dayNumber = Number(dayMatch[2]);
-        if (!month || dayNumber < 1 || dayNumber > new Date(Date.UTC(Number(year), Number(month), 0)).getUTCDate()) continue;
-        const dayNum = String(dayNumber).padStart(2, "0");
-        const dateKey = `${year}-${month}-${dayNum}`;
+        let dateKey = typeof day.isoDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(day.isoDate)
+          ? day.isoDate : null;
+        if (!dateKey) {
+          const dayMatch = String(day.date || "").match(/([A-Za-z]+)\s+(\d{1,2})$/);
+          if (!dayMatch) continue;
+          const month = monthNumber(dayMatch[1]);
+          const dayNumber = Number(dayMatch[2]);
+          if (!month || dayNumber < 1 || dayNumber > new Date(Date.UTC(Number(year), Number(month), 0)).getUTCDate()) continue;
+          dateKey = year + "-" + month + "-" + String(dayNumber).padStart(2, "0");
+        }
 
         for (const show of day.shows || []) {
           const times = String(show.time || "").split(/\s+[–-]\s+/);
